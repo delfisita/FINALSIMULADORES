@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class SimulationManager : MonoBehaviour
 {
-    public List<GameObject> citizenPrefabs; // Lista de prefabs para diferentes tipos de ciudadanos
-    public int populationSize = 100; // Número total de ciudadanos
-    public float initialInfectionRate = 0.05f; // Porcentaje inicial de infectados
-    public float initialMisinformationRate = 0.2f; // Porcentaje inicial de desinformados
-
+    public List<GameObject> citizenPrefabs; 
+    public int populationSize = 10; 
+    public float initialInfectionRate = 0.05f; 
+    public float initialMisinformationRate = 0.2f; 
+    public float defaultInfectionChance = 0.3f;
+    public float defaultSpreadDelay = 1f;
     void Start()
     {
         for (int i = 0; i < populationSize; i++)
         {
-            // Selecciona un prefab base (el primero en la lista por defecto)
+           
             GameObject citizenPrefab = citizenPrefabs[0];
             float randomValue = Random.Range(0f, 1f);
 
-            // Decide el tipo de ciudadano basado en probabilidades
+           
             if (randomValue < initialInfectionRate)
             {
                 citizenPrefab = citizenPrefabs.Find(prefab => prefab.name == "INFECTADO");
@@ -30,15 +31,18 @@ public class SimulationManager : MonoBehaviour
             {
                 citizenPrefab = citizenPrefabs.Find(prefab => prefab.name == "SANO");
             }
-            
+           if (randomValue < initialInfectionRate + initialMisinformationRate)
+            {
+                citizenPrefab = citizenPrefabs.Find(prefab => prefab.name == "PRECAVIDO");
+            }
 
-            // Crea el ciudadano en una posición aleatoria
+            //hacer spawners o chequear el rango
             GameObject citizen = Instantiate(citizenPrefab, GetRandomPosition(), Quaternion.identity);
         }
     }
 
     Vector2 GetRandomPosition()
     {
-        return new Vector2(Random.Range(-8f, 8f), Random.Range(-4f, 4f));
+        return new Vector2(Random.Range(6f, -6f), Random.Range(5f, -5f));
     }
 }

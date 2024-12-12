@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
 public enum CitizenState
 {
     Healthy,
@@ -9,12 +6,12 @@ public enum CitizenState
     Precavido,
     Desinformado
 }
-
 public class Citizen : MonoBehaviour
 {
     public CitizenState state;
-    public float infectionChance; // Probabilidad de infectarse al entrar en contacto
-    public float spreadDelay = 1f; // Tiempo entre contagios
+    public float infectionChance; 
+    public float spreadDelay = 1f;
+    public float detectionRadius = 1f; 
     private float spreadTimer;
 
     void Update()
@@ -34,30 +31,59 @@ public class Citizen : MonoBehaviour
     {
         if (state == CitizenState.Healthy)
         {
+          
             float chance = Random.Range(0f, 1f);
-            if (chance < infectionChance)
+            float adjustedInfectionChance = infectionChance;
+
+           
+            if (state == CitizenState.Desinformado)
+            {
+                adjustedInfectionChance += 0.3f;
+            }
+           
+            else if (state == CitizenState.Precavido)
+            {
+                adjustedInfectionChance -= 0.2f; 
+            }
+
+            if (chance < adjustedInfectionChance)
             {
                 BecomeInfected();
+                Debug.Log($"{gameObject.name} se ha infectado.");
             }
         }
     }
 
     private void SpreadInfection()
     {
-        Collider2D[] nearbyCitizens = Physics2D.OverlapCircleAll(transform.position, 1f);
+        Collider2D[] nearbyCitizens = Physics2D.OverlapCircleAll(transform.position, detectionRadius);
         foreach (var col in nearbyCitizens)
         {
             Citizen other = col.GetComponent<Citizen>();
             if (other != null && other.state == CitizenState.Healthy)
             {
+                Debug.DrawLine(transform.position, other.transform.position, Color.red, 1f);
                 other.TryToInfect();
             }
         }
     }
 
+
     private void BecomeInfected()
     {
         state = CitizenState.Infected;
-        GetComponent<SpriteRenderer>().color = Color.red; // Cambia el color a rojo
+        //cambiar el sprite renderer por sprite 
+        GetComponent<SpriteRenderer>().color = Color.red; 
     }
+
+    
+    private void OnDrawGizmos()
+    {
+        if (state == CitizenState.Infected)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, detectionRadius);
+        }
+    }
+
 }
