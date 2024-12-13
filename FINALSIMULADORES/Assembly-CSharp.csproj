@@ -64,13 +64,10 @@
     <Compile Include="Assets\Scripts\ParameterManager.cs" />
     <Compile Include="Assets\Scripts\RandomMovement.cs" />
     <Compile Include="Assets\Scripts\SimulationManager.cs" />
+    <Compile Include="Assets\Scripts\Movimiento camara.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\2D Zombie\Shader\Spine-Skeleton.shader" />
-    <None Include="Assets\Backyard - Free\Readme.txt" />
-    <None Include="Assets\2D Zombie\Spine2D Animations Exports\Zombie_Normal.atlas.txt" />
-    <None Include="Assets\2D Zombie\Unity Native Animations\Zombie_Normal.atlas.txt" />
-    <None Include="Assets\2D Zombie\ReadMe.txt" />
+    <None Include="Assets\COPY SPRIGHT\Comic Battle Royale\2D Character - Astronaut\Documentation.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -31,28 +31,27 @@ public class Citizen : MonoBehaviour
     {
         if (state == CitizenState.Healthy)
         {
-          
             float chance = Random.Range(0f, 1f);
             float adjustedInfectionChance = infectionChance;
 
-           
+            // Ajusta la probabilidad según el estado del ciudadano
             if (state == CitizenState.Desinformado)
             {
-                adjustedInfectionChance += 0.3f;
+                adjustedInfectionChance += 0.3f; // Mayor chance si está desinformado
             }
-           
             else if (state == CitizenState.Precavido)
             {
-                adjustedInfectionChance -= 0.2f; 
+                adjustedInfectionChance = Mathf.Max(0f, adjustedInfectionChance - 0.2f); // Reduce, pero nunca negativo
             }
 
             if (chance < adjustedInfectionChance)
             {
                 BecomeInfected();
-                Debug.Log($"{gameObject.name} se ha infectado.");
+                Debug.Log($"{gameObject.name} se ha infectado con probabilidad {adjustedInfectionChance}.");
             }
         }
     }
+
 
     private void SpreadInfection()
     {
@@ -72,7 +71,7 @@ public class Citizen : MonoBehaviour
     private void BecomeInfected()
     {
         state = CitizenState.Infected;
-        //cambiar el sprite renderer por sprite 
+       
         GetComponent<SpriteRenderer>().color = Color.red; 
     }
 

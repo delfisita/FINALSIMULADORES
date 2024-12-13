@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class RandomMovement : MonoBehaviour
 {
-    public float speed = 2f;
+    public float speed = 10f;
     void Update()
     {
         Vector2 direction = Random.insideUnitCircle.normalized; 
