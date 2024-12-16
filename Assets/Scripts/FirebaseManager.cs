@@ -2,20 +2,20 @@ using System.Collections;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.UI; // Para manejar la UI
+using UnityEngine.UI;
 
 public class FirebaseManager : MonoBehaviour
 {
-    // URL base de tu Realtime Database
+
     private string firebaseURL = "https://finalsimuladores-54bba-default-rtdb.firebaseio.com/";
 
-    // Referencias a elementos UI en Unity para mostrar estadísticas
+
     public Text infectadosText;
     public Text velocidadPropagacionText;
 
     void Start()
     {
-        // Iniciar la escucha de datos en Firebase
+
         StartCoroutine(EscucharDatos());
     }
 
@@ -50,14 +50,14 @@ public class FirebaseManager : MonoBehaviour
 
         try
         {
-            // Deserializar el JSON manualmente
+
             var datos = JsonUtility.FromJson<Estadisticas>(json);
             Debug.Log("Datos deserializados correctamente.");
 
-            // Actualizar la UI
+
             infectadosText.text = "Infectados: " + datos.Infectados;
 
-            // Convertir VelocidadDePropagacion a float si es necesario
+
             float velocidadPropagacion = 0f;
             if (float.TryParse(datos.VelocidadDePropagacion.Replace(',', '.'), System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out velocidadPropagacion))
             {
@@ -74,17 +74,17 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    // Método para actualizar las estadísticas en Firebase
+
     public void ActualizarEstadisticas(int infectados, int poblacionTotal, float velocidadPropagacion, float tiempo)
     {
-        // Crear un objeto para las estadísticas
+
         Estadisticas estadisticas = new Estadisticas
         {
             Infectados = infectados,
             VelocidadDePropagacion = velocidadPropagacion.ToString("F2")
         };
 
-        // Convertir a JSON y subir a Firebase
+
         string json = JsonUtility.ToJson(estadisticas);
         StartCoroutine(SubirEstadisticasFirebase(json));
     }
@@ -111,6 +111,6 @@ public class FirebaseManager : MonoBehaviour
     public class Estadisticas
     {
         public int Infectados;
-        public string VelocidadDePropagacion; // Cambiado a string para manejar el formato inicial
+        public string VelocidadDePropagacion;
     }
 }

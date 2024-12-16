@@ -20,7 +20,7 @@ public class ParameterManager : MonoBehaviour
       
         infectionRateSlider.value = simulationManager.initialInfectionRate;
         misinformationRateSlider.value = simulationManager.initialMisinformationRate;
-        infectionChanceSlider.value = simulationManager.defaultInfectionChance;
+        infectionChanceSlider.value = simulationManager.initialInfectionRate;
         spreadDelaySlider.value = simulationManager.defaultSpreadDelay;
 
         
@@ -32,7 +32,7 @@ public class ParameterManager : MonoBehaviour
       
         simulationManager.initialInfectionRate = infectionRateSlider.value;
         simulationManager.initialMisinformationRate = misinformationRateSlider.value;
-        simulationManager.defaultInfectionChance = infectionChanceSlider.value;
+        simulationManager.initialInfectionRate = infectionChanceSlider.value;
         simulationManager.defaultSpreadDelay = spreadDelaySlider.value;
 
      
@@ -60,7 +60,7 @@ public class ParameterManager : MonoBehaviour
            
             if (citizen.state == CitizenState.Healthy || citizen.state == CitizenState.Desinformado)
             {
-                citizen.infectionChance = simulationManager.defaultInfectionChance;
+                citizen.infectionChance = simulationManager.initialInfectionRate;
 
                
                 if (citizen.state == CitizenState.Infected)
